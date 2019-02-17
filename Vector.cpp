@@ -1,6 +1,9 @@
 #include "Vector.h"
 
 Vector::~Vector() {
+	for (int i = 0; i < this->size; i++) {
+		delete this->array[i];
+	}
 	delete this->array;
 }
 
