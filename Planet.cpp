@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <time.h>
 
-Planet::Planet(int distance, int id){
+Planet::Planet(int distance){
 	this->id = id;
 	this->distance = distance;
         this->pos = rand()%360;

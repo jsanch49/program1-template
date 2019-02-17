@@ -17,7 +17,7 @@ Star::~Star() {
 
 int Star::addPlanet() {
 	Planet ** newPlanets = new Planet*[++(this->current_planets)];//if planets=NULL should work
-	Planet * planet = new Planet(rand(),this->next_id++);
+	Planet * planet = new Planet(rand());
 	newPlanets[this->current_planets-1] = planet;
 	if (this->planets == NULL) {
 	       	this->planets = newPlanets;
