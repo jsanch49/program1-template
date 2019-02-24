@@ -3,7 +3,7 @@
 #include <time.h>
 
 Planet::Planet(int distance){
-	this->id = id;
+	this->id = (long int)this;
 	this->distance = distance;
         this->pos = rand()%360;
 	switch (rand()%3) {

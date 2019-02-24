@@ -1,21 +1,29 @@
-DEP=Star
-DEPP=Planet
-TARGET=lab3
+DEP1=Star
+DEP2=Planet
+DEP3=Vector
+DEP4=List
+TARGET=test
 FLAGS=-Wall -Wextra -DDEBUG -g -std=c++14
 
 all: $(TARGET)
 
-$(TARGET): $(TARGET).o $(DEP).o $(DEPP).o
-	g++ $(FLAGS) $(TARGET).o $(DEP).o $(DEPP).o -o $(TARGET)
+$(TARGET): $(TARGET).o $(DEP1).o $(DEP2).o $(DEP3).o $(DEP4).o
+	g++ $(FLAGS) $(TARGET).o $(DEP1).o $(DEP2).o $(DEP3).o $(DEP4).o -o $(TARGET)
 
-$(TARGET).o: $(TARGET).cpp $(DEP).h
+$(TARGET).o: $(TARGET).cpp $(DEP1).h
 	g++ $(FLAGS) -c $(TARGET).cpp
 
-$(DEP).o: $(DEP).cpp $(DEPP).h $(DEP).h
-	g++ $(FLAGS) -c $(DEP).cpp
+$(DEP1).o: $(DEP1).cpp $(DEP2).h $(DEP1).h
+	g++ $(FLAGS) -c $(DEP1).cpp
 
-$(DEPP).o: $(DEPP).cpp $(DEPP).h
-	g++ $(FLAGS) -c $(DEPP).cpp
+$(DEP2).o: $(DEP2).cpp $(DEP2).h
+	g++ $(FLAGS) -c $(DEP2).cpp
+
+$(DEP3).o: $(DEP3).cpp $(DEP3).h $(DEP2).h
+	g++ $(FLAGS) -c $(DEP3).cpp
+
+$(DEP4).o: $(DEP4).cpp $(DEP4).h $(DEP2).h
+	g++ $(FLAGS) -c $(DEP4).cpp
 
 run: all
 	./$(TARGET)
@@ -26,5 +34,6 @@ memcheck: all
 clean:
 	rm -f $(TARGET)
 	rm -f $(TARGET).o
-	rm -f $(DEPP).o
-	rm -f $(DEP).o
+	rm -f $(DEP1).o
+	rm -f $(DEP2).o $(DEP3).o $(DEP4).o
+
