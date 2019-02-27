@@ -2,7 +2,7 @@ DEP1=Star
 DEP2=Planet
 DEP3=Vector
 DEP4=List
-TARGET=test
+TARGET=program1
 FLAGS=-Wall -Wextra -DDEBUG -g -std=c++14
 
 all: $(TARGET)
@@ -10,7 +10,7 @@ all: $(TARGET)
 $(TARGET): $(TARGET).o $(DEP1).o $(DEP2).o $(DEP3).o $(DEP4).o
 	g++ $(FLAGS) $(TARGET).o $(DEP1).o $(DEP2).o $(DEP3).o $(DEP4).o -o $(TARGET)
 
-$(TARGET).o: $(TARGET).cpp $(DEP1).h
+$(TARGET).o: $(TARGET).cpp $(DEP1).h $(DEP2).h $(DEP3).h $(DEP4).h 
 	g++ $(FLAGS) -c $(TARGET).cpp
 
 $(DEP1).o: $(DEP1).cpp $(DEP2).h $(DEP1).h

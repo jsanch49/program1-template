@@ -128,7 +128,7 @@ bool List::remove(int index) {
 	return false;
 }
 
-unsigned List::size() {
+unsigned int List::size() {
 	int ret = 1;
 	if (head == NULL) return 0;
 	Node* itr = head;

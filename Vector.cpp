@@ -79,6 +79,6 @@ bool Vector::remove(int index) {
 
 unsigned Vector::size() {
 	if (this->array == NULL) return 0;
-	std::cout << vsize << std::endl;
+	//std::cout << vsize << std::endl;
 	return this->vsize;
 }
