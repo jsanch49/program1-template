@@ -36,42 +36,38 @@ List::~List() {
 }
 
 void List::insert(int index, Planet * p) {
-	if (this->head == NULL) {
-		this->head = new Node(p);
-		this->tail = this->head;
-		return;
-	}
-	Node* itr = head;
-	Node* toAdd = new Node(p);
 	if (index < 0) return;
-	if (index >= this->lsize) {
-		Node* current = tail;
-		tail = toAdd;
-		current->next = tail;
-		tail->next = NULL;
-		tail->prev = current;
-		this->lsize++;
-		return;
-	} else if (index == 0) {
-		toAdd->next = head;
-		head->prev = toAdd;
-		this->lsize++;
-		std::cout << lsize << std::endl;
-		return;
-	} else {
-		int i = 0;
-		while ( i < index-1) {
-			i++;
-			itr = itr->next;
+	Node* np = new Node(p);
+	if (head == NULL) {
+		np->next = NULL;
+		np->prev = NULL;
+		head = np;
+		tail = np;
+	} else { //List is not empty
+		if(index == 0) {
+			np->next = head;
+			head->prev = np;
+			np->prev = NULL;
+			head = np;
+		} else if (index >= lsize) {
+			np->prev = tail;
+			np->next = NULL;
+			tail->next = np;
+			tail = np;
+		} else {
+			Node* itr = head;
+			int count = 0;
+			while (count < index-1) {
+				itr = itr->next;
+				count++;
+			}
+			np->prev = itr;
+			np->next = itr->next;
+			itr->next->prev = np;
+			itr->next = np;
 		}
-		//itr points to element before index
-		Node* after = itr->next;
-		itr->next = toAdd;
-		toAdd->prev = itr;
-		toAdd->next = after;
-		after->prev = toAdd;
-		return;
 	}
+	this->lsize++;
 }
 
 Planet * List::read(int index) {
@@ -135,8 +131,9 @@ bool List::remove(int index) {
 unsigned List::size() {
 	int ret = 1;
 	if (head == NULL) return 0;
-	while (head->next != NULL) {
-		head = head->next;
+	Node* itr = head;
+	while (itr->next != NULL) {
+		itr = itr->next;
 		ret++;
 	}
 	std::cout << ret << std::endl;
