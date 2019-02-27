@@ -8,7 +8,6 @@ class Vector{
 	private:
 	   Planet** array;
 	   int vsize;
-	   void copy(int, Planet**,Planet**);
 	public:
 	    void insert(int,Planet*);
 	    Vector();

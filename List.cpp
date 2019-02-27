@@ -136,7 +136,7 @@ unsigned List::size() {
 		itr = itr->next;
 		ret++;
 	}
-	std::cout << ret << std::endl;
+	//std::cout << ret << std::endl;
 	return ret;
 }
 

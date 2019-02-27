@@ -10,46 +10,49 @@ Vector::~Vector() {
 	for (int i = 0; i < this->vsize; i++) {
 		delete this->array[i];
 	}
-	delete this->array;
-}
-
-void Vector::copy(int elements, Planet ** from, Planet ** to) {
-	for (int i = 0; i < elements; i++) {
-		to[i] = from[i];
-	}
+	delete[] this->array;
 }
 
 void Vector::insert(int index, Planet * p) {
 	if (p == NULL) return;
+	if (index < 0) return;
 	if (this->array == NULL) {
 		this->array = new Planet*[index+1];
 		this->array[index] = p;
 		this->vsize = index+1;
+		//intiliaze other indexes to NULL
+		for(int i = 0; i < this->vsize; i++) {
+			if (i == index) continue;
+			this->array[i] = NULL;
+		}
 		return;
 	}
-	if (index < 0) return;
-	if (this->vsize <= index) {
-		//resize array index + 1
-		Planet** cp = new Planet*[index+1];
-		copy(this->vsize, this->array, cp);
-		cp[index] = p;
-		this->vsize = index+1;
-		delete[] this->array;
-		this->array = cp;
-		return;
+	int resize = index + 1;
+	if (index < this->vsize) resize = this->vsize+1;
+	Planet** cp = new Planet*[resize];
+	if (index > this->vsize) {
+		for (int i = 0; i < this->vsize; i++) {
+			cp[i] = this->array[i];
+		}
+		for (int i = this->vsize; i < resize; i++) {
+			if (i == index) {
+				cp[i] = p;
+				continue;
+			}
+			cp[i] = NULL;
+		}
 	} else {
-		//add into array resize ++
-		Planet** cp = new Planet*[this->vsize + 1];
-		copy(index, this->array, cp);
-		for (int i = index; i < this->vsize; i++) {
-			cp[i+1] = this->array[i];
+		for (int i = 0; i < index; i++) {
+			cp[i] = this->array[i];
 		}
 		cp[index] = p;
-		this->vsize++;
-		delete[] this->array;
-		this->array = cp;
-		return;
+		for (int i = index+1; i < resize; i++) {
+			cp[i] = this->array[i-1];
+		}
 	}
+	this->vsize = resize;
+	delete[] this->array;
+	this->array = cp;
 }
 
 
@@ -61,12 +64,14 @@ Planet* Vector::read(int index) {
 bool Vector::remove(int index) {
 	if (index < 0 || index >= this->vsize) return false;
 	Planet** ret = new Planet*[this->vsize - 1];
-	copy(index, this->array, ret);
+	for (int i = 0; i < index; i++) {
+		ret[i] = this->array[i];
+	}
 	for (int i = index+1; i < this->vsize; i++) {
 		ret[i-1] = this->array[i]; 
 	}
 	delete this->array[index];
-	delete this->array;
+	delete[] this->array;
 	this->array = ret;
 	this->vsize--;
 	return true;

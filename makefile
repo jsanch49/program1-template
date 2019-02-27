@@ -29,7 +29,7 @@ run: all
 	./$(TARGET)
 
 memcheck: all
-	valgrind ./$(TARGET) --leak-check=full
+	valgrind ./$(TARGET) --leak-check=full --track-origins=yes
 
 clean:
 	rm -f $(TARGET)
